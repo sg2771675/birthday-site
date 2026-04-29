@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Chidkoliii 💖</title>
+
+<style>
+body {
+  margin: 0;
+  background: rgb(164, 65, 184);
+  color: white;
+  font-family: Arial;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  overflow: hidden;
+}
+
+#box {
+  max-width: 300px;
+  position: relative;
+  z-index: 2; /* IMPORTANT */
+}
+
+/* Glow text */
+h2 {
+  font-size: 22px;
+  text-shadow: 0 0 10px pink, 0 0 20px pink;
+}
+
+/* Button */
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  background: pink;
+  color: black;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+/* Fireworks canvas FIX */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 0; /* behind everything */
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="fireworks"></canvas>
+
+<div id="box">
+  <h2 id="text">Heyyyy Gunnuuuu 💕</h2>
+  <button onclick="next()">Tap ❤️🙈</button>
+</div>
+
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// ✅ Typing effect
+function typeText(element, text, speed = 40) {
+  element.innerHTML = "";
+  let i = 0;
+
+  function typing() {
+    if (i < text.length) {
+      element.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typing, speed);
+    }
+  }
+  typing();
+}
+
+let messages = [
+  "I have something special for you....",
+  "You are not just my best friend, For me.... 💖",
+  "You are my comfort zone, aapse me harr chiz share kar sakta huu, bina kisi hesitation kee, haa kabhi kabhi irritate karta huu , so whatt that's my love language (jhel lena thoda too, aap nhi to orr kon jhelegaa😁)",
+  "Thank you for always being there mee 🫶",
+  "Sach boluu , mujhe kabhi nhi laga thaa ki apn kabhi friends bhee ban paayengee itna sab kuchh hone ke baad , butt seee God's plan 🥰",
+  "You know what, I don't wanna loose you, for me you matters the most over anyone ❤️",
+  "Thank you mujhee jhelneyy ke liyee, merii ghisi pitii baatein sunne ke liyee (jo me kabhi kabhi hee karta huu samjhee naa) 😁😙",
+  "Aaajj to aapkaa special dinnn heeeee, yeeyyyeeeeeeeeee 🎂",
+  "Happiesttt Birthday Madamm Jiiiii 🎉💖"
+];
+
+let i = 0;
+
+function next() {
+  document.getElementById("music").play();
+
+  let text = document.getElementById("text");
+
+  if (i < messages.length) {
+    typeText(text, messages[i]);
+    i++;
+  } else {
+    document.getElementById("box").innerHTML = `
+      <div style="text-align:center; position:relative; z-index:2;">
+        <h1>💖 Surprise 💖</h1>
+        <p>Cake cut karooo jiiii 🎂</p>
+        <img src="photo1.jpg" width="220" style="border-radius:15px;">
+        <img src="photo2.jpg" width="220" style="border-radius:15px;">
+      </div>
+    `;
+
+    // restart fireworks
+    startFireworks();
+  }
+}
+
+// 🎆 Fireworks (fixed)
+function startFireworks() {
+ const canvas = document.getElementById("fireworks");
+if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let particles = [];
+
+  function createFirework() {
+    let x = Math.random() * canvas.width;
+    let y = Math.random() * canvas.height / 2;
+
+    for (let i = 0; i < 40; i++) {
+      particles.push({
+        x: x,
+        y: y,
+        angle: Math.random() * 2 * Math.PI,
+        speed: Math.random() * 4 + 1,
+        life: 80
+      });
+    }
+  }
+
+  function animate() {
+   ctx.fillStyle = "rgba(140, 52, 158, 0.2)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach((p, index) => {
+      p.x += Math.cos(p.angle) * p.speed;
+      p.y += Math.sin(p.angle) * p.speed;
+      p.life--;
+
+      ctx.fillStyle = "pink";
+      ctx.fillRect(p.x, p.y, 2, 2);
+
+      if (p.life <= 0) particles.splice(index, 1);
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  setInterval(createFirework, 1000);
+  animate();
+}
+
+// ✅ start fireworks once
+window.onload = () => {
+  startFireworks();
+};
+</script>
+
+</body>
+</html>
